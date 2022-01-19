@@ -4,7 +4,7 @@ import React from "react";
 import Fragment from "@/components/image-break/fragment";
 import anime from 'animejs'
 import './style.less'
-function imageBreak({ canvasWidth, canvasHeight, imgUrl }:ImageBreakProps, ref : any) {
+function imageBreak({ canvasWidth, canvasHeight, imgUrl, onFinished }:ImageBreakProps, ref : any) {
   if (!canvasWidth || !canvasHeight) {
     return (
       <div>加载中...</div>
@@ -39,6 +39,7 @@ function imageBreak({ canvasWidth, canvasHeight, imgUrl }:ImageBreakProps, ref :
     console.log('--shaked--')
     await (containerRef.current && shatter({ fragments, canvasWidth, canvasHeight, container: containerRef.current }).finished)
     console.log('--shattered--')
+    onFinished && onFinished()
   }
   return (
     <div className="page-breaker" ref={containerRef}>
@@ -54,7 +55,8 @@ const TWO_PI = Math.PI * 2;
 export interface ImageBreakProps {
   canvasWidth: number,
   canvasHeight: number,
-  imgUrl: string
+  imgUrl: string,
+  onFinished?: Function
 }
 
 
